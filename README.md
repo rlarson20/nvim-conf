@@ -1,2 +1,2 @@
 # nvim-conf
-My neovim configuration for the modern erra
+My neovim configuration for the modern era
