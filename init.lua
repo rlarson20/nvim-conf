@@ -98,6 +98,23 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
+vim.keymap.set('n', '<leader>pl', function()
+  local clipboard = vim.fn.getreg '+'
+  local link_text = '[](' .. clipboard .. ')'
+  vim.cmd 'normal o'
+  local cursor_pos = vim.api.nvim_win_get_cursor(0)
+  local row, col = cursor_pos[1], cursor_pos[2]
+
+  vim.api.nvim_buf_set_text(0, row - 1, col, row - 1, col, { link_text })
+  vim.api.nvim_win_set_cursor(0, { row, col + 1 })
+  vim.cmd 'startinsert'
+end, { desc = 'Paste Markdown Link and Title It' })
+
+vim.api.nvim_create_user_command('PrettyJson', ":%!jq '.'", {})
+vim.api.nvim_create_user_command('OT2MDL', ':%! ~/src/bash/onetab_list_to_md_link.sh', {})
+
+vim.keymap.set('n', '<leader>fm', ':OT2MDL<CR>', { desc = 'Convert OneTab lists to Markdown links' })
+
 -- TIP: Disable arrow keys in normal mode
 -- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
 -- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
@@ -118,6 +135,39 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper win
 -- vim.keymap.set("n", "<C-S-l>", "<C-w>L", { desc = "Move window to the right" })
 -- vim.keymap.set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
 -- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
+
+vim.keymap.set('n', '<Leader>st', function()
+  -- We'll use the built-in `help_tags` picker because it correctly finds all help pages.
+  -- We just need to tell it what to do when we press Enter.
+  require('telescope.builtin').help_tags {
+    attach_mappings = function(prompt_bufnr, map)
+      local actions = require 'telescope.actions'
+      local action_state = require 'telescope.actions.state'
+
+      -- This is our custom action. It will run when we press <CR>.
+      local open_in_new_tab_and_return = function()
+        -- Get the currently selected entry in Telescope
+        local selection = action_state.get_selected_entry()
+        -- Close the Telescope window
+        actions.close(prompt_bufnr)
+        if selection then
+          -- Run the vim command to open the help page in a new tab,
+          -- then immediately switch back to the previous tab.
+          vim.cmd('tab help ' .. vim.fn.fnameescape(selection.value) .. ' | tabprevious')
+        end
+      end
+
+      -- Now, we map our custom action to the Enter key for both insert and normal mode.
+      map('i', '<CR>', open_in_new_tab_and_return)
+      map('n', '<CR>', open_in_new_tab_and_return)
+
+      -- By returning `true`, we tell Telescope that we've set up all the mappings
+      -- we need, so it shouldn't apply its own defaults (which would override ours).
+      -- This ensures that the other default keys like C-v/C-x for splits still work.
+      return true
+    end,
+  }
+end, { desc = '[S]earch Help in New [T]ab' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -288,6 +338,7 @@ require('lazy').setup({
 
       -- Useful for getting pretty icons, but requires a Nerd Font.
       { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+      { 'lucirukei/telescope-tab-picker.nvim' },
     },
     config = function()
       -- Telescope is a fuzzy finder that comes with a lot of different things that
@@ -324,6 +375,20 @@ require('lazy').setup({
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
+          },
+          ['telescope-tab-picker'] = {
+            filename_modifier = ':t',
+            filename_separator = ', ',
+            title_fn_modifier = ':.',
+            create_command = true,
+            command_name = 'TabPicker',
+            display_amount = true,
+            sorter = require('telescope.sorters').get_fuzzy_file,
+            mappings = {
+              ['<cr>'] = require('telescope-tab-picker').select_entry,
+              ['<c-k>'] = require('telescope-tab-picker').step_up,
+              ['<c-j>'] = require('telescope-tab-picker').step_down,
+            },
           },
         },
       }
@@ -604,8 +669,7 @@ require('lazy').setup({
         -- harper-ls harper_ls
         -- rust-analyzer rust_analyzer
         -- lua-language-server lua_ls
-        -- ruff
-        ruff = {},
+        basedpyright = {},
         rust_analyzer = {},
 
         lua_ls = {
@@ -657,6 +721,43 @@ require('lazy').setup({
           end,
         },
       }
+      vim.lsp.config('*', {})
+      vim.lsp.enable {
+        'djlsp',
+        -- 'ada_ls',
+        -- 'angularls',
+        -- 'arduino-language-server',
+        'asm_lsp',
+        'awk_ls',
+        'bacon_ls',
+        'basedpyright',
+        'bashls',
+        -- 'clangd',
+        'cssls',
+        'eslint',
+        -- 'gitlab_ci_ls',
+        'html',
+        'ty',
+        -- 'jinja_lsp',
+        -- 'lemminx',
+        'ltex_plus',
+        'lua_ls',
+        -- 'markdown_oxide',
+        -- 'marksman',
+        -- 'nginx_language_server',
+        'oxlint',
+        -- 'postgres_lsp',
+        'rust_analyzer',
+        'sqls',
+        'superhtml',
+        'tailwindcss',
+        'taplo',
+        'ts_ls',
+        -- 'vale_ls',
+        -- 'vimls',
+        -- 'wasm-language-tools',
+        'yamlls',
+      }
     end,
   },
 
@@ -692,6 +793,10 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
+        python = { 'ruff' },
+        markdown = { 'markdownlint', 'markdown-toc', 'mdsf' },
+        javascript = { 'prettierd', 'rustywind' },
+        typescript = { 'prettierd', 'rustywind' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
@@ -729,17 +834,17 @@ require('lazy').setup({
               require('luasnip.loaders.from_vscode').lazy_load()
             end,
           },
-          { 'Kaiser-Yang/blink-cmp-git' },
-          { 'alexandre-abrioux/blink-cmp-npm.nvim' },
         },
         opts = {},
       },
-      'folke/lazydev.nvim',
+      { 'folke/lazydev.nvim' },
+      { 'Kaiser-Yang/blink-cmp-git' },
+      { 'alexandre-abrioux/blink-cmp-npm.nvim' },
     },
     --- @module 'blink.cmp'
     --- @type blink.cmp.Config
     opts = {
-      snippets = { preset = 'default' },
+      snippets = { preset = 'luasnip' },
 
       keymap = {
         -- 'default' (recommended) for mappings similar to built-in completions
@@ -778,11 +883,11 @@ require('lazy').setup({
       completion = {
         -- By default, you may press `<c-space>` to show the documentation.
         -- Optionally, set `auto_show = true` to show the documentation after a delay.
-        documentation = { auto_show = false, auto_show_delay_ms = 500 },
+        documentation = { auto_show = true, auto_show_delay_ms = 50 },
       },
 
       sources = {
-        default = { 'git', 'lsp', 'path', 'snippets', 'lazydev', 'buffer', 'omni', 'luasnip' },
+        default = { 'git', 'lsp', 'path', 'snippets', 'lazydev', 'buffer', 'omni' },
         providers = {
           lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
           git = {
@@ -863,26 +968,69 @@ require('lazy').setup({
     -- Shows a signature help window while you type arguments for a function
     signature = { enabled = true },
   },
-
   { -- You can easily change to a different colorscheme.
     -- Change the name of the colorscheme plugin below, and then
     -- change the command in the config to whatever the name of that colorscheme is.
     --
     -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    'folke/tokyonight.nvim',
-    priority = 1000, -- Make sure to load this before all the other start plugins.
-    config = function()
-      ---@diagnostic disable-next-line: missing-fields
-      require('tokyonight').setup {
-        styles = {
-          comments = { italic = false }, -- Disable italics in comments
+    'catppuccin/nvim',
+    name = 'catppuccin',
+    priority = 1000, --make sure to load this first
+    opts = {
+      transparent_background = true,
+      flavour = 'mocha',
+      integrations = {
+        cmp = true,
+        gitsigns = true,
+        treesitter = true,
+        notify = true,
+        markdown = true,
+        flash = true,
+        -- harpoon = true,
+        indent_blankline = {
+          enabled = true,
+          scope_color = '', -- catppuccin color (eg. `lavender`) Default: text
+          colored_indent_levels = false,
         },
-      }
-
+        mason = true,
+        neotree = true,
+        noice = true,
+        native_lsp = {
+          enabled = true,
+          virtual_text = {
+            errors = { 'italic' },
+            hints = { 'italic' },
+            warnings = { 'italic' },
+            information = { 'italic' },
+            ok = { 'italic' },
+          },
+          underlines = {
+            errors = { 'underline' },
+            hints = { 'underline' },
+            warnings = { 'underline' },
+            information = { 'underline' },
+            ok = { 'underline' },
+          },
+          inlay_hints = {
+            background = true,
+          },
+        },
+        render_markdown = true,
+        snacks = {
+          enabled = false,
+          indent_scope_color = '', -- catppuccin color (eg. `lavender`) Default: text
+        },
+        telescope = { enabled = true },
+        which_key = true,
+      },
+    },
+    init = function()
       -- Load the colorscheme here.
-      -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
+      -- Like many other themes, this one has different styles, and you could load any other.
+      vim.cmd.colorscheme 'catppuccin'
+
+      -- You can configure highlights by doing something like:
+      --vim.cmd.hi 'Comment gui=none'
     end,
   },
 
