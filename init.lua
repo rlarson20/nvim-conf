@@ -1,3 +1,32 @@
+-- Do nothing but bootstrap and require entry point
+-- require('core.bootstrap')
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+--
+
+--
+--              _   _
+--   ___  _ __ | |_(_) ___  _ __  ___
+--  / _ \| '_ \| __| |/ _ \| '_ \/ __|
+-- | (_) | |_) | |_| | (_) | | | \__ \
+--  \___/| .__/ \__|_|\___/|_| |_|___/
+--       |_|
+--
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
@@ -7,7 +36,6 @@ vim.g.maplocalleader = ' '
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
--- [[ Setting options ]]
 -- See `:help vim.o`
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
@@ -80,7 +108,15 @@ vim.o.scrolloff = 15
 -- See `:help 'confirm'`
 vim.o.confirm = true
 
--- [[ Basic Keymaps ]]
+--
+--  _  __
+-- | |/ /___ _   _ _ __ ___   __ _ _ __  ___
+-- | ' // _ \ | | | '_ ` _ \ / _` | '_ \/ __|
+-- | . \  __/ |_| | | | | | | (_| | |_) \__ \
+-- |_|\_\___|\__, |_| |_| |_|\__,_| .__/|___/
+--           |___/                |_|
+--
+
 --  See `:help vim.keymap.set()`
 
 -- Clear highlights on search when pressing <Esc> in normal mode
@@ -169,7 +205,15 @@ vim.keymap.set('n', '<Leader>st', function()
   }
 end, { desc = '[S]earch Help in New [T]ab' })
 
--- [[ Basic Autocommands ]]
+--
+--     _         _                           _
+--    / \  _   _| |_ ___   ___ _ __ ___   __| |___
+--   / _ \| | | | __/ _ \ / __| '_ ` _ \ / _` / __|
+--  / ___ \ |_| | || (_) | (__| | | | | | (_| \__ \
+-- /_/   \_\__,_|\__\___/ \___|_| |_| |_|\__,_|___/
+--
+--
+
 --  See `:help lua-guide-autocommands`
 
 -- Highlight when yanking (copying) text
