@@ -249,8 +249,8 @@ Consider adding `folke/lua-dev.nvim` *or* `dNL` to get proper typing for your ow
 ────────────────────────────────────────────
 
 - [x] Create `lua/core` and move options; commit.
-- [ ] Move keymaps; commit.  
-- [ ] Extract autocmds; commit.  
+- [x] Move keymaps; commit.  
+- [x] Extract autocmds; commit.  
 - [ ] Copy the bootstrapper & shrink `init.lua` to one line; commit.  
 - [ ] Move two or three plugins at a time (they remain working); commit small.  
 - [ ] When everything is modular, delete dead code & comments.
