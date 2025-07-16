@@ -3,6 +3,8 @@ local M = {}
 -- normal opts
 
 local o = vim.o
+local g = vim.g
+local opt = vim.opt
 
 o.number = true
 o.relativenumber = true
@@ -17,7 +19,7 @@ o.signcolumn = 'yes'
 o.updatetime = 250
 o.timeoutlen = 300
 o.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 o.inccommand = 'split'
 o.cursorline = true
 o.scrolloff = 15
@@ -25,10 +27,14 @@ o.confirm = true
 o.splitright = true
 o.splitbelow = true
 
+-- disable some default providers
+g.loaded_perl_provider = 0
+g.loaded_ruby_provider = 0
+
 -- UI icon toggle
-vim.g.have_nerd_font = true
+g.have_nerd_font = true
 M.lazy_ui = {
-  ui = { icons = vim.g.have_nerd_font and {} or require('core.util').no_nerd_icons },
+  ui = { icons = g.have_nerd_font and {} or require('core.util').no_nerd_icons },
 }
 
 return M

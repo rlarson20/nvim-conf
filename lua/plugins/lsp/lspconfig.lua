@@ -203,7 +203,7 @@ return {
       superhtml = {},
       html = {},
       bacon_ls = {},
-      ty = {},
+      -- ty = {}, -- not ready yet
       oxlint = {},
       eslint = {},
       harper_ls = {},
@@ -227,16 +227,8 @@ return {
     -- configure server defaults
     vim.lsp.config('*', { capabilities = capabilities })
     for server_name, server_config in pairs(servers) do
-      local config = vim.tbl_deep_extend('force', {
-        cmd = require('lspconfig')[server_name].document_config.default_config.cmd,
-        filetypes = require('lspconfig')[server_name].document_config.default_config.filetypes,
-        root_markers = require('lspconfig')[server_name].document_config.default_config.root_dir and {} or nil,
-      }, server_config)
-      if not server_config.capabilities then
-        config.capabilities = capabilities
-      end
-
-      vim.lsp.config[server_name] = config
+      -- The server configurations will be merged with defaults from runtime files
+      vim.lsp.config[server_name] = server_config
     end
 
     -- ensure things are installed
