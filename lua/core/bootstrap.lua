@@ -9,9 +9,9 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Load core modules (options, keymaps, autocmds) -----------------------------
-for _, mod in ipairs { 'core.options', 'core.keymaps', 'core.autocmds' } do
+for _, mod in ipairs { 'core.options', 'core.keymaps', 'core.autocmds', 'core.usercmds' } do
   require(mod)
 end
 
 -- Load plugins (one line) ----------------------------------------------------
-require('lazy').setup({ { import = 'plugins' } }, require('core.options').lazy_ui)
+require('lazy').setup({ spec = { import = 'plugins' } }, require('core.options').lazy_ui)
