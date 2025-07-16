@@ -45,6 +45,8 @@ map(n, '<Leader>st', function()
   }
 end, '[S]earch Help in New [T]ab')
 
+map(n, 'grT', ':tabclose<CR>', '[r]emove [t]ab')
+
 -- Your custom mappings (markdown link helper etc.) can be required
 -- from a separate module to keep this file short:
 -- require('core.mappings.markdown')

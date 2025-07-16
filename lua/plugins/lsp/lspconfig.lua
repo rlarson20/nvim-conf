@@ -59,6 +59,7 @@ return {
         end
 
         -- Rename the variable under your cursor.
+        -- NOTE: grn is now a default global keymap in Neovim 0.11
         --  Most Language Servers support renaming across files, etc.
         map('grn', vim.lsp.buf.rename, '[R]e[n]ame')
 
@@ -75,7 +76,7 @@ return {
 
         -- Jump to the definition of the word under your cursor.
         --  This is where a variable was first declared, or where a function is defined, etc.
-        --  To jump back, press <C-t>.
+        --  NOTE: To jump back, press <C-t>.
         map('grd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
 
         -- WARN: This is not Goto Definition, this is Goto Declaration.
@@ -194,63 +195,51 @@ return {
     --  - settings (table): Override the default settings passed when initializing the server.
     --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
     local servers = {
-      -- clangd = {},
-      -- gopls = {},
-      -- pyright = {},
-      -- rust_analyzer = {},
-      -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
-      --
-      -- Some languages (like typescript) have entire language plugins that can be useful:
-      --    https://github.com/pmizio/typescript-tools.nvim
-      --
-      -- But for many setups, the LSP (`ts_ls`) will work just fine
-      -- ts_ls = {},
-      --
-      -- css-variables-language-server css_variables
-      -- tailwindcss-language-server tailwindcss
-      -- css-lsp cssls
-      -- superhtml
-      -- html-lsp html
-      -- bacon-ls
-      -- ty
-      -- oxlint
-      -- eslint-lsp eslint
-      -- typescript-language-server ts_ls
-      -- harper-ls harper_ls
-      -- rust-analyzer rust_analyzer
-      -- lua-language-server lua_ls
+      -- See `:help lspconfig-all` for a list of all the pre-configured LSPs
+      ts_ls = {},
+      css_variables = {},
+      tailwindcss = {},
+      cssls = {},
+      superhtml = {},
+      html = {},
+      bacon_ls = {},
+      ty = {},
+      oxlint = {},
+      eslint = {},
+      harper_ls = {},
       basedpyright = {},
+      ruff = {},
       rust_analyzer = {},
 
       lua_ls = {
-        -- cmd = { ... },
-        -- filetypes = { ... },
-        -- capabilities = {},
         settings = {
           Lua = {
             completion = {
               callSnippet = 'Replace',
             },
-            -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-            -- diagnostics = { disable = { 'missing-fields' } },
           },
         },
       },
+      sqls = {},
+      taplo = {},
+      yamlls = {},
     }
+    -- configure server defaults
+    vim.lsp.config('*', { capabilities = capabilities })
+    for server_name, server_config in pairs(servers) do
+      local config = vim.tbl_deep_extend('force', {
+        cmd = require('lspconfig')[server_name].document_config.default_config.cmd,
+        filetypes = require('lspconfig')[server_name].document_config.default_config.filetypes,
+        root_markers = require('lspconfig')[server_name].document_config.default_config.root_dir and {} or nil,
+      }, server_config)
+      if not server_config.capabilities then
+        config.capabilities = capabilities
+      end
 
-    -- Ensure the servers and tools above are installed
-    --
-    -- To check the current status of installed tools and/or manually install
-    -- other tools, you can run
-    --    :Mason
-    --
-    -- You can press `g?` for help in this menu.
-    --
-    -- `mason` had to be setup earlier: to configure its options see the
-    -- `dependencies` table for `nvim-lspconfig` above.
-    --
-    -- You can add other tools here that you want Mason to install
-    -- for you, so that they are available from within Neovim.
+      vim.lsp.config[server_name] = config
+    end
+
+    -- ensure things are installed
     local ensure_installed = vim.tbl_keys(servers or {})
     vim.list_extend(ensure_installed, {
       'stylua', -- Used to format Lua code
@@ -260,53 +249,13 @@ return {
     require('mason-lspconfig').setup {
       ensure_installed = {}, -- explicitly set to an empty table (Kickstart populates installs via mason-tool-installer)
       automatic_installation = false,
-      handlers = {
-        function(server_name)
-          local server = servers[server_name] or {}
-          -- This handles overriding only values explicitly passed
-          -- by the server configuration above. Useful when disabling
-          -- certain features of an LSP (for example, turning off formatting for ts_ls)
-          server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-          require('lspconfig')[server_name].setup(server)
-        end,
-      },
     }
-    vim.lsp.config('*', {})
-    vim.lsp.enable {
-      'djlsp',
-      -- 'ada_ls',
-      -- 'angularls',
-      -- 'arduino-language-server',
-      'asm_lsp',
-      'awk_ls',
-      'bacon_ls',
-      'basedpyright',
-      'bashls',
-      -- 'clangd',
-      'cssls',
-      'eslint',
-      -- 'gitlab_ci_ls',
-      'html',
-      'ty',
-      -- 'jinja_lsp',
-      -- 'lemminx',
-      'ltex_plus',
-      'lua_ls',
-      -- 'markdown_oxide',
-      -- 'marksman',
-      -- 'nginx_language_server',
-      'oxlint',
-      -- 'postgres_lsp',
-      'rust_analyzer',
-      'sqls',
-      'superhtml',
-      'tailwindcss',
-      'taplo',
-      'ts_ls',
-      -- 'vale_ls',
-      -- 'vimls',
-      -- 'wasm-language-tools',
-      'yamlls',
-    }
+    -- Enable all configured servers
+    local server_names = vim.tbl_keys(servers)
+    vim.lsp.enable(server_names)
+
+    -- Optional: To enable/disable specific servers dynamically:
+    -- vim.lsp.enable('rust_analyzer', false)  -- disable
+    -- vim.lsp.enable('rust_analyzer', true)   -- re-enable
   end,
 }

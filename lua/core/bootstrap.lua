@@ -14,4 +14,8 @@ for _, mod in ipairs { 'core.options', 'core.keymaps', 'core.autocmds', 'core.us
 end
 
 -- Load plugins (one line) ----------------------------------------------------
-require('lazy').setup({ spec = { import = 'plugins' } }, require('core.options').lazy_ui)
+require('lazy').setup {
+  spec = { { import = 'plugins' }, { import = 'plugins.editing' }, { import = 'plugins.lsp' }, { import = 'plugins.ui' } },
+  install = { colorscheme = { 'catppuccin' } },
+  require('core.options').lazy_ui,
+}
