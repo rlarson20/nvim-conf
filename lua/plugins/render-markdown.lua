@@ -51,7 +51,7 @@ return {
     },
     anti_conceal = {
       -- This enables hiding any added text on the line the cursor is on.
-      enabled = false,
+      enabled = true,
       -- Which elements to always show, ignoring anti conceal behavior. Values can either be
       -- booleans to fix the behavior or string lists representing modes where anti conceal
       -- behavior will be ignored. Valid values are:
@@ -62,9 +62,9 @@ return {
         sign = true,
       },
       -- Number of lines above cursor to show.
-      above = 0,
+      above = 1,
       -- Number of lines below cursor to show.
-      below = 0,
+      below = 1,
     },
     padding = {
       -- Highlight to use when adding whitespace, should match background.
@@ -314,7 +314,7 @@ return {
     -- There are two special states for unchecked & checked defined in the markdown grammar.
     checkbox = {
       -- Turn on / off checkbox state rendering.
-      enabled = true,
+      enabled = false,
       -- Additional modes to render checkboxes.
       render_modes = false,
       unchecked = {
