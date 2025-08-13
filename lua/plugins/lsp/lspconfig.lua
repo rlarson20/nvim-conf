@@ -15,6 +15,7 @@ return {
     -- Allows extra capabilities provided by blink.cmp
     'saghen/blink.cmp',
   },
+  event = { 'BufReadPre', 'BufNewFile' },
   config = function()
     -- Brief aside: **What is LSP?**
     --
@@ -206,12 +207,28 @@ return {
       superhtml = {},
       html = {},
       bacon_ls = {},
-      -- ty = {}, -- not ready yet
       oxlint = {},
       eslint = {},
       harper_ls = {},
-      basedpyright = {},
-      ruff = {},
+      basedpyright = {
+        settings = {
+          pyright = {
+            disableOrganizeImports = true,
+          },
+          python = {
+            analysis = {
+              ignore = { '*' },
+            },
+          },
+        },
+      },
+      ruff = {
+        -- init_options = {
+        --settings = {
+        -- ruff settings go here
+        -- },
+        --},
+      },
       rust_analyzer = {},
 
       lua_ls = {

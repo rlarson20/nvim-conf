@@ -1,3 +1,5 @@
+-- https://github.com/stevearc/conform.nvim/blob/master/doc/recipes.md
+-- recipes
 return { -- Autoformat
   'stevearc/conform.nvim',
   event = { 'BufWritePre' },
@@ -30,8 +32,8 @@ return { -- Autoformat
     end,
     formatters_by_ft = {
       lua = { 'stylua' },
-      python = { 'ruff' },
-      markdown = { 'markdownlint', 'markdown-toc', 'mdsf' },
+      python = { 'ruff_fix', 'ruff_format' },
+      markdown = { 'prettierd' },
       javascript = { 'prettierd', 'rustywind' },
       typescript = { 'prettierd', 'rustywind' },
       -- Conform can also run multiple formatters sequentially

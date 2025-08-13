@@ -10,7 +10,7 @@ function U.aug(name, clear)
 end
 
 function U.aucmd(event, name, opts)
-  opts.group = U.aug(name)
+  opts.group = U.aug(name, clear)
   vim.api.nvim_create_autocmd(event, opts)
 end
 

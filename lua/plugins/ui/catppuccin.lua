@@ -5,6 +5,7 @@ return {
   opts = {
     transparent_background = true,
     flavour = 'mocha',
+    compile_path = vim.fn.stdpath 'cache' .. '/catppuccin',
     integrations = {
       cmp = true,
       gitsigns = true,

@@ -13,6 +13,20 @@ for _, mod in ipairs { 'core.options', 'core.keymaps', 'core.autocmds', 'core.us
   require(mod)
 end
 
+for _, p in ipairs {
+  '2html_plugin',
+  'gzip',
+  'matchit',
+  'matchparen',
+  'netrwPlugin',
+  'tarPlugin',
+  'tohtml',
+  'tutor',
+  'zipPlugin',
+} do
+  vim.g['loaded_' .. p] = 1
+end
+
 -- Load plugins (one line) ----------------------------------------------------
 require('lazy').setup {
   spec = { { import = 'plugins' }, { import = 'plugins.editing' }, { import = 'plugins.lsp' }, { import = 'plugins.ui' } },

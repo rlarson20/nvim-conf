@@ -1,6 +1,21 @@
 return { -- Fuzzy Finder (files, lsp, etc)
   'nvim-telescope/telescope.nvim',
-  event = 'VimEnter',
+  keys = {
+    { '<leader>sh', desc = '[S]earch [H]elp' },
+    { '<leader>sk', desc = '[S]earch [K]eymaps' },
+    { '<leader>sf', desc = '[S]earch [F]iles' },
+    { '<leader>sh', desc = '[S]earch [H]elp' },
+    { '<leader>sk', desc = '[S]earch [K]eymaps' },
+    { '<leader>sf', desc = '[S]earch [F]iles' },
+    { '<leader>ss', desc = '[S]earch [S]elect Telescope' },
+    { '<leader>sw', desc = '[S]earch current [W]ord' },
+    { '<leader>sg', desc = '[S]earch by [G]rep' },
+    { '<leader>sd', desc = '[S]earch [D]iagnostics' },
+    { '<leader>sr', desc = '[S]earch [R]esume' },
+    { '<leader>s.', desc = '[S]earch Recent Files ("." for repeat)' },
+    { '<leader><leader>', desc = '[ ] Find existing buffers' },
+  },
+  cmd = { 'Telescope' },
   dependencies = {
     'nvim-lua/plenary.nvim',
     { -- If encountering errors, see telescope-fzf-native README for installation instructions

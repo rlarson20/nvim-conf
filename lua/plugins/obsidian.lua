@@ -23,6 +23,7 @@ return {
     'MeanderingProgrammer/render-markdown.nvim',
   },
   opts = {
+    legacy_commands = false,
     workspaces = {
       {
         name = 'LaughTale',
@@ -89,31 +90,39 @@ return {
 
     -- Optional, configure key mappings. These are the defaults. If you don't want to set any keymappings this
     -- way then set 'mappings = {}'.
-    mappings = {
-      -- Overrides the 'gf' mapping to work on markdown/wiki links within your vault.
-      ['gf'] = {
-        action = function()
+    vim.api.nvim_create_autocmd('User', {
+      pattern = 'ObsidianNoteEnter',
+      callback = function(ev)
+        -- Overrides the 'gf' mapping to work on markdown/wiki links within your vault.
+        vim.keymap.set('n', 'gf', function()
           return require('obsidian').util.gf_passthrough()
-        end,
-        opts = { noremap = false, expr = true, buffer = true },
-      },
-      -- Toggle check-boxes.
-      ['<leader>ch'] = {
-        action = function()
+        end, {
+          buffer = ev.buf,
+          noremap = false,
+          expr = true,
+          desc = 'Follow markdown/wiki links',
+        })
+
+        -- Toggle check-boxes.
+        vim.keymap.set('n', '<leader>ch', function()
           return require('obsidian').util.toggle_checkbox()
-        end,
-        opts = { buffer = true },
-      },
-      -- Smart action depending on context, either follow link or toggle checkbox.
-      ['<cr>'] = {
-        action = function()
+        end, {
+          buffer = ev.buf,
+          desc = 'Toggle checkbox',
+        })
+
+        -- Smart action depending on context, either follow link or toggle checkbox.
+        vim.keymap.set('n', '<cr>', function()
           return require('obsidian').util.smart_action()
-        end,
-        opts = { buffer = true, expr = true },
-      },
-      ['<leader>nn'] = {
-        action = function()
-          local client = require('obsidian').get_client()
+        end, {
+          buffer = ev.buf,
+          expr = true,
+          desc = 'Smart action (follow link or toggle checkbox)',
+        })
+
+        -- Create new note
+        vim.keymap.set('n', '<leader>nn', function()
+          local Note = require 'obsidian.note'
 
           -- Prompt the user for a title for the new note.
           vim.ui.input({ prompt = 'Enter note title: ' }, function(title)
@@ -124,19 +133,20 @@ return {
             end
 
             -- Create the new note with the provided title and your desired tags.
-            note = client:create_note {
+            local note = Note.create {
               title = title,
               tags = { 'obsidian-nvim-generated' },
               no_write = true,
             }
-            client:open_note(note, { sync = true })
-            client:write_note_to_buffer(note)
+            Note.open(note, { sync = true })
+            note:write_to_buffer()
           end)
-        end,
-        opts = { desc = 'Create new note' },
-      },
-    },
-
+        end, {
+          buffer = ev.buf,
+          desc = 'Create new note',
+        })
+      end,
+    }),
     -- Where to put new notes. Valid options are
     --  * "current_dir" - put new notes in same directory as the current buffer.
     --  * "notes_subdir" - put new notes in the default notes subdirectory.

@@ -8,8 +8,8 @@ return {
       lint.linters_by_ft = {
         markdown = { 'markdownlint' },
         lua = { 'selene' },
-        python = { 'ruff', 'trivy', 'pydocstyle' },
-        sql = { 'sqruff', 'postgres_lsp', 'eugene' },
+        python = { 'ruff' },
+        sql = { 'sqruff' },
         css = { 'stylelint' },
         html = { 'markuplint', 'htmlhint' },
         yaml = { 'yamllint', 'actionlint' },
