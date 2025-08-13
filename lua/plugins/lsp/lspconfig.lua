@@ -206,7 +206,12 @@ return {
       cssls = {},
       superhtml = {},
       html = {},
-      bacon_ls = {},
+      bacon_ls = {
+        init_options = {
+          updateOnSave = true,
+          updateOnSaveWaitMillis = 1000,
+        },
+      },
       oxlint = {},
       eslint = {},
       harper_ls = {},
@@ -229,7 +234,14 @@ return {
         -- },
         --},
       },
-      rust_analyzer = {},
+      rust_analyzer = {
+        checkOnSave = {
+          enable = false,
+        },
+        diagnostics = {
+          enable = false,
+        },
+      },
 
       lua_ls = {
         settings = {
