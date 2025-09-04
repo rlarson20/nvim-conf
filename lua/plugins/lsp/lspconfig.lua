@@ -255,6 +255,7 @@ return {
       sqls = {},
       taplo = {},
       yamlls = {},
+      marksman = {},
     }
     -- configure server defaults
     vim.lsp.config('*', { capabilities = capabilities })
