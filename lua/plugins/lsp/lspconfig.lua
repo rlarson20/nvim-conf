@@ -214,7 +214,6 @@ return {
       },
       oxlint = {},
       eslint = {},
-      harper_ls = {},
       basedpyright = {
         settings = {
           pyright = {
