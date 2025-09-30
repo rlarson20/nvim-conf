@@ -27,6 +27,8 @@ o.confirm = true
 o.splitright = true
 o.splitbelow = true
 
+o.foldmethod = 'manual'
+
 -- disable some default providers
 g.loaded_perl_provider = 0
 g.loaded_ruby_provider = 0
