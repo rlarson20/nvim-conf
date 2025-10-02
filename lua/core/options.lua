@@ -4,6 +4,7 @@ local M = {}
 
 local o = vim.o
 local g = vim.g
+-- local a = vim.api
 local opt = vim.opt
 
 o.number = true
