@@ -4,31 +4,52 @@ local M = {}
 
 local o = vim.o
 local g = vim.g
+
 -- local a = vim.api
+
 local opt = vim.opt
 
+-- cursor visibility
+o.cursorline = true
+o.cursorlineopt = 'screenline'
+o.cursorcolumn = true
+
+-- line number stuff
 o.number = true
 o.relativenumber = true
 o.mouse = 'a'
-o.showmode = false
+o.showmode = false -- dont need because lualine
 o.clipboard = 'unnamedplus'
-o.breakindent = true
 o.undofile = true
+
+--case stuff
 o.ignorecase = true
 o.smartcase = true
+
 o.signcolumn = 'yes'
-o.updatetime = 250
+o.updatetime = 500
 o.timeoutlen = 300
 o.list = true
 opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+
+-- substitution preview
 o.inccommand = 'split'
-o.cursorline = true
 o.scrolloff = 15
 o.confirm = true
 o.splitright = true
 o.splitbelow = true
 
-o.foldmethod = 'manual'
+-- folding, meant for deep nested files
+o.foldmethod = 'indent'
+o.foldlevel = 4
+
+-- better indentation management
+o.autoindent = true
+o.copyindent = true
+o.breakindent = true
+
+-- limit popup size
+o.pumheight = 5
 
 -- disable some default providers
 g.loaded_perl_provider = 0

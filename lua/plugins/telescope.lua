@@ -1,6 +1,6 @@
 return { -- Fuzzy Finder (files, lsp, etc)
   'nvim-telescope/telescope.nvim',
-  keys = {
+  keys = { --TODO: see if i actually need this here
     { '<leader>sh', desc = '[S]earch [H]elp' },
     { '<leader>sk', desc = '[S]earch [K]eymaps' },
     { '<leader>sf', desc = '[S]earch [F]iles' },
