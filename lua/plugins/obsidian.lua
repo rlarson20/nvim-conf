@@ -202,11 +202,11 @@ return {
 
     -- Optional, boolean or a function that takes a filename and returns a boolean.
     -- `true` indicates that you don't want obsidian.nvim to manage frontmatter.
-    disable_frontmatter = false,
+    ['frontmatter.enabled'] = true,
 
     -- Optional, alternatively you can customize the frontmatter data.
     ---@return table
-    note_frontmatter_func = function(note)
+    ['frontmatter.func'] = function(note)
       -- Add the title of the note as an alias.
       if note.title then
         note:add_alias(note.title)
@@ -285,11 +285,11 @@ return {
     -- Optional, sort search results by "path", "modified", "accessed", or "created".
     -- The recommend value is "modified" and `true` for `sort_reversed`, which means, for example,
     -- that `:ObsidianQuickSwitch` will show the notes sorted by latest modified time
-    sort_by = 'modified',
-    sort_reversed = true,
+    ['search.sort_by'] = 'modified',
+    ['search.sort_reversed'] = true,
 
     -- Set the maximum number of lines to read from notes on disk when performing certain searches.
-    search_max_lines = 1000,
+    ['search.max_lines'] = 1000,
 
     -- Optional, determines how certain commands open notes. The valid options are:
     -- 1. "current" (the default) - to always open in the current window
@@ -311,11 +311,11 @@ return {
       -- Runs anytime you leave the buffer for a note.
       ---@param client obsidian.Client
       ---@param note obsidian.Note
-      leave_note = function(client, note)
-        vim.api.nvim_buf_call(note.bufnr or 0, function()
-          vim.cmd 'silent w'
-        end)
-      end,
+      -- leave_note = function(client, note)
+      --   vim.api.nvim_buf_call(note.bufnr or 0, function()
+      --     vim.cmd 'silent w'
+      --   end)
+      -- end,
 
       -- Runs right before writing the buffer for a note.
       ---@param client obsidian.Client
