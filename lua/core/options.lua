@@ -34,14 +34,13 @@ opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
 -- substitution preview
 o.inccommand = 'split'
-o.scrolloff = 15
+o.scrolloff = 999 -- want to stay in middle
 o.confirm = true
 o.splitright = true
 o.splitbelow = true
 
--- folding, meant for deep nested files
-o.foldmethod = 'indent'
-o.foldlevel = 4
+o.foldmethod = 'manual'
+-- o.foldlevel = 4
 
 -- better indentation management
 o.autoindent = true
