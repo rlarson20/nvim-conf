@@ -51,3 +51,5 @@ map(n, '<leader>l', ':Lazy<CR>', 'Lazy')
 -- Your custom mappings (markdown link helper etc.) can be required
 -- from a separate module to keep this file short:
 -- require('core.mappings.markdown')
+
+map(n, '<leader>gs', ':Git<CR>', 'Fugitive')
