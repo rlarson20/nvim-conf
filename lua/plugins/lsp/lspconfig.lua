@@ -213,22 +213,25 @@ return {
       eslint = {},
       basedpyright = {
         settings = {
-          pyright = {
-            disableOrganizeImports = true,
-          },
           python = {
             analysis = {
-              ignore = { '*' },
+              typeCheckingMode = 'standard', -- or "basic" if too noisy
+              autoImportCompletions = true,
+              diagnosticSeverityOverrides = {
+                -- Ruff handles these better
+                reportUnusedImport = 'none',
+                reportUnusedVariable = 'none',
+              },
             },
           },
         },
       },
       ruff = {
-        -- init_options = {
-        --settings = {
-        -- ruff settings go here
-        -- },
-        --},
+        init_options = {
+          settings = {
+            organizeImports = true,
+          },
+        },
       },
       rust_analyzer = {
         checkOnSave = {
