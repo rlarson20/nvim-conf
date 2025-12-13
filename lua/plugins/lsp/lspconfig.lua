@@ -234,11 +234,15 @@ return {
         },
       },
       rust_analyzer = {
-        checkOnSave = {
-          enable = false,
-        },
-        diagnostics = {
-          enable = false,
+        settings = {
+          ['rust-analyzer'] = {
+            -- Let bacon handle diagnostics via cargo check
+            checkOnSave = false,
+            diagnostics = { enable = false },
+            -- But keep other rust-analyzer features
+            inlayHints = { enable = true },
+            cargo = { allFeatures = true },
+          },
         },
       },
 
