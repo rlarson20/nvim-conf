@@ -25,57 +25,21 @@ return {
     'leoluz/nvim-dap-go',
   },
   keys = {
-    -- Basic debugging keymaps, feel free to change to your liking!
-    {
-      '<F5>',
-      function()
-        require('dap').continue()
-      end,
-      desc = 'Debug: Start/Continue',
-    },
-    {
-      '<F1>',
-      function()
-        require('dap').step_into()
-      end,
-      desc = 'Debug: Step Into',
-    },
-    {
-      '<F2>',
-      function()
-        require('dap').step_over()
-      end,
-      desc = 'Debug: Step Over',
-    },
-    {
-      '<F3>',
-      function()
-        require('dap').step_out()
-      end,
-      desc = 'Debug: Step Out',
-    },
-    {
-      '<leader>b',
-      function()
-        require('dap').toggle_breakpoint()
-      end,
-      desc = 'Debug: Toggle Breakpoint',
-    },
-    {
-      '<leader>B',
-      function()
-        require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ')
-      end,
-      desc = 'Debug: Set Breakpoint',
-    },
-    -- Toggle to see last session result. Without this, you can't see session output in case of unhandled exception.
-    {
-      '<F7>',
-      function()
-        require('dapui').toggle()
-      end,
-      desc = 'Debug: See last session result.',
-    },
+    -- Basic debugging keymaps
+    { '<F5>', function() require('dap').continue() end, desc = 'Debug: Start/Continue' },
+    { '<F1>', function() require('dap').step_into() end, desc = 'Debug: Step Into' },
+    { '<F2>', function() require('dap').step_over() end, desc = 'Debug: Step Over' },
+    { '<F3>', function() require('dap').step_out() end, desc = 'Debug: Step Out' },
+    { '<F7>', function() require('dapui').toggle() end, desc = 'Debug: Toggle UI' },
+    -- Breakpoints
+    { '<leader>db', function() require('dap').toggle_breakpoint() end, desc = 'Toggle Breakpoint' },
+    { '<leader>dB', function() require('dap').set_breakpoint(vim.fn.input 'Breakpoint condition: ') end, desc = 'Conditional Breakpoint' },
+    -- Additional debug commands
+    { '<leader>dc', function() require('dap').run_to_cursor() end, desc = 'Run to Cursor' },
+    { '<leader>de', function() require('dapui').float_element('watches', { enter = true }) end, desc = 'Inspect Watches', mode = { 'n', 'v' } },
+    { '<leader>dr', function() require('dap').repl.toggle() end, desc = 'Toggle REPL' },
+    { '<leader>dl', function() require('dap').run_last() end, desc = 'Run Last' },
+    { '<leader>dt', function() require('dap').terminate() end, desc = 'Terminate' },
   },
   config = function()
     local dap = require 'dap'
@@ -96,6 +60,7 @@ return {
         -- Update this to ensure that you have the debuggers for the langs you want
         'delve',
         'python',
+        'codelldb', -- Rust/C/C++ debugging
       },
     }
 
