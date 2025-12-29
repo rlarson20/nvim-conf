@@ -1,6 +1,15 @@
 return {
   'obsidian-nvim/obsidian.nvim',
   version = '*', -- recommended, use latest release instead of latest commit
+  keys = {
+    { '<leader>oo', '<cmd>Obsidian quick_switch<cr>', desc = 'Find notes' },
+    { '<leader>os', '<cmd>Obsidian search<cr>', desc = 'Grep vault' },
+    { '<leader>od', '<cmd>Obsidian today<cr>', desc = "Today's daily note" },
+    { '<leader>ob', '<cmd>Obsidian backlinks<cr>', desc = 'Show backlinks' },
+    { '<leader>ot', '<cmd>Obsidian tags<cr>', desc = 'Search by tags' },
+    { '<leader>oT', '<cmd>Obsidian template<cr>', desc = 'Insert template' },
+    { '<leader>ow', '<cmd>Obsidian workspace<cr>', desc = 'Switch workspace' },
+  },
   event = {
     -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
     -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/**.md"
