@@ -1,0 +1,41 @@
+return {
+  'olimorris/codecompanion.nvim',
+  dependencies = {
+    'nvim-lua/plenary.nvim',
+    'nvim-treesitter/nvim-treesitter',
+  },
+  keys = {
+    { '<leader>cc', '<cmd>CodeCompanionChat Toggle<cr>', desc = 'Toggle Chat', mode = { 'n', 'v' } },
+    { '<leader>ca', '<cmd>CodeCompanionActions<cr>', desc = 'Actions', mode = { 'n', 'v' } },
+    { '<leader>ci', '<cmd>CodeCompanion<cr>', desc = 'Inline', mode = { 'n', 'v' } },
+  },
+  opts = {
+    strategies = {
+      chat = { adapter = 'claude_code' },
+      inline = { adapter = 'claude_code' },
+    },
+    adapters = {
+      claude_code = function()
+        -- Read OAuth token from .env file
+        local env_file = vim.fn.stdpath 'config' .. '/.env'
+        local token = nil
+        local f = io.open(env_file, 'r')
+        if f then
+          for line in f:lines() do
+            local key, value = line:match '^([^=]+)=(.+)$'
+            if key == 'CLAUDE_CODE_OAUTH_TOKEN' then
+              token = value
+              break
+            end
+          end
+          f:close()
+        end
+        return require('codecompanion.adapters').extend('claude_code', {
+          env = {
+            CLAUDE_CODE_OAUTH_TOKEN = token,
+          },
+        })
+      end,
+    },
+  },
+}
