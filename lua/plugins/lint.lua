@@ -16,7 +16,9 @@ return {
         bash = { 'shellcheck', 'shellharden' },
         cpp = { 'cpplint' },
         javascript = { 'oxlint' },
+        javascriptreact = { 'oxlint' },
         typescript = { 'oxlint' },
+        typescriptreact = { 'oxlint' },
       }
 
       -- Create autocommand which carries out the actual linting

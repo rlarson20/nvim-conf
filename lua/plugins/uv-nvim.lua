@@ -13,16 +13,16 @@ return {
 
     -- Keymaps to register (set to false to disable)
     keymaps = {
-      prefix = '<leader>x', -- Main prefix for uv commands
-      commands = true, -- Show uv commands menu (<leader>x)
-      run_file = true, -- Run current file (<leader>xr)
-      run_selection = true, -- Run selected code (<leader>xs)
-      run_function = true, -- Run function (<leader>xf)
-      venv = true, -- Environment management (<leader>xe)
-      init = true, -- Initialize uv project (<leader>xi)
-      add = true, -- Add a package (<leader>xa)
-      remove = true, -- Remove a package (<leader>xd)
-      sync = true, -- Sync packages (<leader>xc)
+      prefix = '<leader>pu', -- Main prefix for uv commands (Python UV)
+      commands = true, -- Show uv commands menu (<leader>pu)
+      run_file = true, -- Run current file (<leader>pur)
+      run_selection = true, -- Run selected code (<leader>pus)
+      run_function = true, -- Run function (<leader>puf)
+      venv = true, -- Environment management (<leader>pue)
+      init = true, -- Initialize uv project (<leader>pui)
+      add = true, -- Add a package (<leader>pua)
+      remove = true, -- Remove a package (<leader>pud)
+      sync = true, -- Sync packages (<leader>puc)
     },
 
     -- Execution options

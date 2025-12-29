@@ -51,6 +51,7 @@ return { -- Useful plugin to show you pending keybinds.
       { '<leader>g', group = '[G]it' },
       { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
       { '<leader>o', group = '[O]bsidian' },
+      { '<leader>p', group = '[P]ython' },
       { '<leader>q', group = '[Q]uit/Session' },
       { '<leader>s', group = '[S]earch' },
       { '<leader>t', group = '[T]est' },
