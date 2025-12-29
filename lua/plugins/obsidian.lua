@@ -21,13 +21,7 @@ return {
     'BufNewFile /Users/rjlarson/src/Daedalus/Codex-Prometheum/**.md',
   },
   dependencies = {
-    -- Required.
     'nvim-lua/plenary.nvim',
-    -- completion
-    'hrsh7th/nvim-cmp',
-    -- picker
-    'nvim-telescope/telescope.nvim',
-    -- syntax highlighting
     'nvim-treesitter/nvim-treesitter',
     'MeanderingProgrammer/render-markdown.nvim',
   },
@@ -273,8 +267,8 @@ return {
     end,
 
     picker = {
-      -- Set your preferred picker. Can be one of 'telescope.nvim', 'fzf-lua', or 'mini.pick'.
-      name = 'telescope.nvim',
+      -- Set your preferred picker. Can be one of 'telescope.nvim', 'fzf-lua', 'mini.pick', or 'snacks.picker'.
+      name = 'snacks.picker',
       -- Optional, configure key mappings for the picker. These are the defaults.
       -- Not all pickers support all mappings.
       note_mappings = {
