@@ -24,6 +24,7 @@ return {
     'nvim-lua/plenary.nvim',
     'nvim-treesitter/nvim-treesitter',
     'MeanderingProgrammer/render-markdown.nvim',
+    'hrsh7th/nvim-cmp',
   },
   opts = {
     legacy_commands = false,
