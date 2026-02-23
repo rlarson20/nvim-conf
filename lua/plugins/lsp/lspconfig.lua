@@ -216,6 +216,10 @@ return {
           ['rust-analyzer'] = {
             -- Let bacon handle diagnostics via cargo check
             checkOnSave = false,
+            check = {
+              command = 'clippy',
+              extraArgs = { '--', '-W', 'clippy::pedantic' }, -- optional
+            },
             diagnostics = { enable = false },
             -- But keep other rust-analyzer features
             inlayHints = { enable = true },
