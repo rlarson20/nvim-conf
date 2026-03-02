@@ -27,7 +27,7 @@ o.ignorecase = true
 o.smartcase = true
 
 o.signcolumn = 'yes'
-o.updatetime = 500
+o.updatetime = 250
 o.timeoutlen = 300
 o.list = true
 opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
