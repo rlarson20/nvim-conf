@@ -47,7 +47,6 @@ return {
         enabled = false,
         indent_scope_color = '', -- catppuccin color (eg. `lavender`) Default: text
       },
-      telescope = { enabled = true },
       which_key = true,
     },
   },
