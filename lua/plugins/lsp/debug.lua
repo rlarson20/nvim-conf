@@ -183,6 +183,24 @@ return {
     dap.configurations.python = {
       { type = 'python', request = 'launch', name = 'Launch file', program = '${file}' },
     }
+    local codelldb_path = require('mason-registry').get_package('codelldb'):get_install_path() .. '/extension/adapter/codelldb'
+    dap.adapters.codelldb = {
+      type = 'server',
+      port = '${port}',
+      executable = { command = codelldb_path, args = { '--port', '${port}' } },
+    }
+    dap.configurations.rust = {
+      {
+        name = 'Launch file',
+        type = 'codelldb',
+        request = 'launch',
+        program = function()
+          return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/target/debug/', 'file')
+        end,
+        cwd = '${workspaceFolder}',
+        stopOnEntry = false,
+      },
+    }
 
     -- Install golang specific config
     require('dap-go').setup {
