@@ -4,7 +4,7 @@ return {
   opts = {
     -- configuration here or empty for defaults
     mappings = {
-      link_follow = false,
+      link_follow = true,
     },
   },
 }
