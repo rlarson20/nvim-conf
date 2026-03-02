@@ -39,8 +39,10 @@ o.confirm = true
 o.splitright = true
 o.splitbelow = true
 
-o.foldmethod = 'manual'
--- o.foldlevel = 4
+o.foldmethod = 'expr'
+o.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+o.foldlevel = 99 -- start with all folds open
+o.foldlevelstart = 99
 
 -- better indentation management
 o.autoindent = true
