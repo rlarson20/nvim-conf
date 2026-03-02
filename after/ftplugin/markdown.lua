@@ -18,7 +18,7 @@ vim.keymap.set('n', '<leader>pl', function()
   local link_text = '[](' .. clipboard .. ')'
   local cur_line = vim.api.nvim_get_current_line()
   local row, col
-  if cur_line:match '^#{1,6} ?$' then
+  if cur_line:match '^#+%s*$' then
     -- blank heading: append link inline, position inside []
     row = vim.api.nvim_win_get_cursor(0)[1]
     local insert_col = #cur_line
