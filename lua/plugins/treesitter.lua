@@ -16,6 +16,33 @@ return { -- Highlight, edit, and navigate code
       additional_vim_regex_highlighting = { 'ruby' },
     },
     indent = { enable = true, disable = { 'ruby' } },
+    textobjects = {
+      select = {
+        enable = true,
+        lookahead = true, -- jump forward to next match automatically
+        keymaps = {
+          ['af'] = '@function.outer',
+          ['if'] = '@function.inner',
+          ['ac'] = '@class.outer',
+          ['ic'] = '@class.inner',
+          ['aa'] = '@parameter.outer', -- aa = around argument
+          ['ia'] = '@parameter.inner',
+        },
+      },
+      move = {
+        enable = true,
+        set_jumps = true, -- adds to jumplist so <C-o> works
+        goto_next_start = { [']f'] = '@function.outer', [']c'] = '@class.outer' },
+        goto_next_end = { [']F'] = '@function.outer', [']C'] = '@class.outer' },
+        goto_previous_start = { ['[f'] = '@function.outer', ['[c'] = '@class.outer' },
+        goto_previous_end = { ['[F'] = '@function.outer', ['[C'] = '@class.outer' },
+      },
+      swap = {
+        enable = true,
+        swap_next = { ['<leader>a'] = '@parameter.inner' },
+        swap_previous = { ['<leader>A'] = '@parameter.inner' },
+      },
+    },
   },
   dependencies = {
     'nvim-treesitter/nvim-treesitter-context',
