@@ -44,7 +44,7 @@ return {
       },
       render_markdown = true,
       snacks = {
-        enabled = false,
+        enabled = true,
         indent_scope_color = '', -- catppuccin color (eg. `lavender`) Default: text
       },
       which_key = true,
