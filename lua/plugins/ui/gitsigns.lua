@@ -2,7 +2,7 @@
 
 return {
   'lewis6991/gitsigns.nvim',
-  cond = vim.fs.find('.git', { upward = true, path = vim.api.nvim_buf_get_name(0) })[1],
+  event = { 'BufReadPre', 'BufNewFile' },
   opts = {
     on_attach = function(bufnr)
       local gitsigns = require 'gitsigns'
