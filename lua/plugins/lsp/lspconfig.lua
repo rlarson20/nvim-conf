@@ -237,6 +237,7 @@ return {
           },
         },
       },
+      ltex = { settings = { ltex = { language = 'en_US' } } }, -- TODO: make this configurable
       sqls = {},
       taplo = {},
       yamlls = {},
