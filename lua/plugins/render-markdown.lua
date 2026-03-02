@@ -314,7 +314,7 @@ return {
     -- There are two special states for unchecked & checked defined in the markdown grammar.
     checkbox = {
       -- Turn on / off checkbox state rendering.
-      enabled = false,
+      enabled = true,
       -- Additional modes to render checkboxes.
       render_modes = false,
       unchecked = {
@@ -389,15 +389,15 @@ return {
       padding = 1,
       -- Minimum column width to use for padded or trimmed cell.
       min_width = 0,
-        -- Characters used to replace table border.
-        -- Correspond to top(3), delimiter(3), bottom(3), vertical, & horizontal.
-        -- stylua: ignore
-        border = {
-            '┌', '┬', '┐',
-            '├', '┼', '┤',
-            '└', '┴', '┘',
-            '│', '─',
-        },
+      -- Characters used to replace table border.
+      -- Correspond to top(3), delimiter(3), bottom(3), vertical, & horizontal.
+      -- stylua: ignore
+      border = {
+        '┌', '┬', '┐',
+        '├', '┼', '┤',
+        '└', '┴', '┘',
+        '│', '─',
+      },
       -- Gets placed in delimiter row for each column, position is based on alignment.
       alignment_indicator = '━',
       -- Highlight for table heading, delimiter, and the line above.
