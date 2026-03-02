@@ -125,6 +125,7 @@ return {
           map('<leader>th', function()
             vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr = event.buf })
           end, '[T]oggle Inlay [H]ints')
+          vim.lsp.inlay_hint.enable(true, { bufnr = event.buf })
         end
       end,
     })
