@@ -11,7 +11,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Load core modules (options, keymaps, autocmds) -----------------------------
-for _, mod in ipairs { 'core.options', 'core.keymaps', 'core.autocmds', 'core.usercmds' } do
+for _, mod in ipairs { 'core.options', 'core.keymaps', 'core.autocmds', 'core.usercmds', 'core.treesitter_compat' } do
   require(mod)
 end
 
